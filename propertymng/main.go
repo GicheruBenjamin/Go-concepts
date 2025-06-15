@@ -2,55 +2,206 @@ package main
 
 import (
 	"fmt"
-	"time"
+	"hsmd/types"
 )
 
-type State string
-
-const (
-	Idle     State = "idle"
-	Running  State = "running"
-	Finished State = "finished"
-)
 
 func main() {
-	state := Idle
+	fmt.Println("  Property Management system  ")
+	fmt.Println("Upcountry Property")
+	types.Displayproperty(Upcountryproperty)
+	fmt.Println("Holiday Home Property")
+	types.Displayproperty(Holidayhomeproperty)
+	fmt.Println("Main Property")
+	types.Displayproperty(Mainproperty)
 
-	for {
-		switch state {
-		case Idle:
-			fmt.Println("Initializing system...")
-			state = startTask()
-		case Running:
-			fmt.Println("System is running...")
-			if taskDone() {
-				state = Finished
-			} else {
-				time.Sleep(time.Second)
-			}
-		case Finished:
-			fmt.Println("System is shutting down.")
-			cleanup()
-			return
-		default:
-			fmt.Println("Unknown state!")
-			return
-		}
-	}
 }
 
-// Simulate starting a task
-func startTask() State {
-	fmt.Println("Starting task...")
-	return Running
+
+
+var Upcountryproperty = types.Property{
+	Name: "Upcountry",
+	Houses: []types.House{
+		{
+			Floors: []types.Floor{
+				{
+					Level: 1,
+					Rooms: []types.Room{
+						{
+							Name: "Kitchen",
+							Windows: 2,
+							Doors: 2,
+						},
+						{
+							Name: "Living Room",
+							Windows: 2,
+							Doors: 2,
+						},
+					},
+				},
+				{
+					Level: 3,
+					Rooms: []types.Room{
+						{
+							// Name: "Kitchen",
+							Windows: 2,
+							Doors: 4,
+						},
+						{
+							// Name: "Living Room",
+							Windows: 2,
+							Doors: 4,
+						},
+					},
+				},
+			},
+		},
+		{
+			Floors: []types.Floor{
+				{
+					Level: 2,
+					Rooms: []types.Room{
+						{
+							//Name: "Kitchen",
+							Windows: 2,
+							Doors: 2,
+						},
+						{
+							//Name: "Living Room",
+							Windows: 2,
+							Doors: 2,
+						},
+					},
+				},
+				{
+					Level: 5,
+					Rooms: []types.Room{
+						{
+							//Name: "Bedroom",
+							Windows: 2,
+							Doors: 6,
+						},
+						{
+							//Name: "Kitchen",
+							Windows: 2,
+							Doors: 6,
+						},
+					},
+				},
+			},
+		},
+	},
 }
 
-// Simulate checking if task is done
-func taskDone() bool {
-	return time.Now().Second()%5 == 0 // simulate occasional finish
+var Holidayhomeproperty = types.Property{
+	Name: "Holiday Home",
+	Houses :[]types.House{
+		{
+			Floors: []types.Floor{
+				{
+					Level: 1,
+					Rooms: []types.Room{
+						{
+							Name: "Kitchen",
+							Windows: 2,
+							Doors: 2,
+						},
+						{
+							Name: "Living Room",
+							Windows: 2,
+							Doors: 2,
+						},
+					},
+				},
+				{
+					Level: 3,
+					Rooms: []types.Room{
+						{
+							Name: "Dining Room",
+							Windows: 2,
+							Doors: 4,
+						},
+						{
+							Name: "Living Room",
+							Windows: 2,
+							Doors: 4,
+						},
+					},
+				},
+			},
+		},
+	},
 }
 
-// Clean up resources
-func cleanup() {
-	fmt.Println("Cleaning up...")
+var Mainproperty = types.Property{
+	Houses: []types.House{
+		{
+			Floors: []types.Floor{
+				{
+					Level: 1,
+					Rooms: []types.Room{
+						{
+							Name: "Kitchen",
+							Windows: 2,
+							Doors: 2,
+						},
+						{
+							Name: "Living Room",
+							Windows: 2,
+							Doors: 2,
+						},
+					},
+				},
+				{
+					Level: 3,
+					Rooms: []types.Room{
+						{
+							Name: "Bathroom",
+							Windows: 2,
+							Doors: 4,
+						},
+						{
+							Name: "Living Room",
+							Windows: 2,
+							Doors: 4,
+						},
+					},
+				},
+			},
+		},
+		{
+			Floors: []types.Floor{
+				{
+					Level: 2,
+					Rooms: []types.Room{
+						{
+							// Name: "Kitchen",
+							Windows: 2,
+							Doors: 2,
+						},
+						{
+							//Name: "Living Room",
+							Windows: 2,
+							Doors: 2,
+						},
+					},
+				},
+				{
+					Level: 5,
+					Rooms: []types.Room{
+						{
+							//Name: "Bedroom",
+							Windows: 2,
+							Doors: 6,
+						},
+						{
+							//Name: "Kitchen",
+							Windows: 2,
+							Doors: 6,
+						},
+					},
+				},
+			},
+		},
+	},
 }
