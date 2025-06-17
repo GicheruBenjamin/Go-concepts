@@ -1,38 +1,85 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"ops-cli/actions"
+	"os"
+	"strconv"
+	"strings"
+	"time"
 )
 
-func main(){
-	// make a choice what action u wanna do
+// A simple struct to demonstrate field access
+type Data struct {
+	Value int
+}
 
-	fmt.Println(" +@#--==   The app Starts from here on out+@#--==")
-	fmt .Println(" Make a choice what action u wanna do..") 
-	fmt.Println(" 1. Access stuff \n. Arithmetic operations \n 3. Binary data \n 4. Compare \n 5. Desion making \n 6. Spread stuff \n 7. Store stuff \n 8. Working with routines \n")
-	fmt.Println("Enter your choice: ")
-	var choice int
-	fmt.Scan(&choice)
+func main() {
+	reader := bufio.NewReader(os.Stdin)
 
-	switch choice {
-	case 1:
-		actions.Access()
-	case 2:
-		actions.Arithmeticops()
-	case 3:
-		actions.Bin()
-	case 4:
-		actions.Compare()
-	case 5:
-		actions.Desionmaking()
-	case 6:
-		actions.Spread()
-	case 7:
-		actions.Store()
-	case 8:
-		actions.Routines()
-	default:
-		fmt.Println("Invalid choice")
+	fmt.Println("Go Operator Categories CLI Demo")
+	fmt.Println("--------------------------------")
+
+	// 1. Input: User gives a number
+	fmt.Print("Enter a number: ")
+	inputStr, _ := reader.ReadString('\n')
+	inputStr = strings.TrimSpace(inputStr)
+	num, _ := strconv.Atoi(inputStr)
+
+	// 2. Storing & accessing struct field
+	data := Data{Value: num}
+	fmt.Printf("\n[Accessing] Struct Value: data.Value = %d\n", data.Value)
+
+	// 3. Bitwise operations
+	bitwise := data.Value ^ 0xF // XOR with 15
+	fmt.Printf("[Bitwise] data.Value ^ 15 = %d\n", bitwise)
+
+	// 4. Comparisons
+	isEven := data.Value%2 == 0
+	fmt.Printf("[Comparison] Is %d even? %v\n", data.Value, isEven)
+
+	// 5. Decision making
+	if data.Value > 10 {
+		fmt.Println("[Decision] It's greater than 10")
+	} else {
+		fmt.Println("[Decision] It's 10 or less")
 	}
+
+	// 6. Arithmetic operation
+	data.Value += 5
+	fmt.Printf("[Arithmetic] Value after += 5: %d\n", data.Value)
+
+	// 7. Assignment (storing)
+	memory := data.Value
+	fmt.Printf("[Assignment] Stored in memory variable: %d\n", memory)
+
+	// 8. Type conversion
+	var asFloat float64 = float64(data.Value)
+	fmt.Printf("[Type Conversion] As float64: %.2f\n", asFloat)
+
+	// 9. Variadic function usage
+	sum := sumAll(1, 2, 3, data.Value)
+	fmt.Printf("[Variadic] Sum of 1,2,3,data.Value: %d\n", sum)
+
+	// 10. Goroutine usage (concurrent print)
+	fmt.Println("[Goroutine] Running in background...")
+	go showLater(data.Value)
+
+	// Wait for goroutine
+	time.Sleep(1 * time.Second)
+}
+
+// Variadic function
+func sumAll(nums ...int) int {
+	total := 0
+	for _, n := range nums {
+		total += n
+	}
+	return total
+}
+
+// Background goroutine function
+func showLater(x int) {
+	time.Sleep(500 * time.Millisecond)
+	fmt.Printf(">>> [Goroutine Output] Final value is %d\n", x)
 }
